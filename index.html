@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Page</title>
+    <style>
+        /* Base styles */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .content-container {
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .rose-content, .hug-content {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .rose-content.hide, .initial-content.hide {
+            display: none;
+        }
+
+        .title {
+            font-size: 5vw; /* Adjusts dynamically with screen size */
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .buttons {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            font-size: 4vw; /* Scales based on screen size */
+        }
+
+        .rose-gif, .hug-gif {
+            width: 80%;
+            max-width: 300px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .hug-content {
+            display: none;
+            text-align: center;
+        }
+
+        .hug-content.show {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-message {
+            font-size: 5vw; /* Responsive font size */
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #noBtn {
+            position: relative;
+        }
+
+        .heart {
+            color: #ff69b4;
+            font-size: 5vw;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 600px) {
+            .content-container {
+                width: 90%;
+            }
+
+            .title {
+                font-size: 6vw;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+                font-size: 5vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-container">
+        <div class="rose-content" id="roseContent">
+            <img src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif" 
+                 alt="Bear with roses" class="rose-gif">
+        </div>
+        <div class="initial-content" id="initialContent">
+            <div class="title">
+                Will you be my Valentine <span class="heart">💝</span>
+            </div>
+            <div class="buttons">
+                <button id="yesBtn">Yes</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+        <div class="hug-content" id="hugContent">
+            <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" 
+                 alt="Hugging bears" class="hug-gif">
+            <div class="success-message">Yay! Happy Valentine's Day! ❤️</div>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const hugContent = document.getElementById('hugContent');
+        const initialContent = document.getElementById('initialContent');
+        const roseContent = document.getElementById('roseContent');
+
+        // Make "No" button move on hover
+        noBtn.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        });
+
+        // Show hug content when "Yes" is clicked
+        yesBtn.addEventListener('click', () => {
+            initialContent.classList.add('hide');
+            roseContent.classList.add('hide');
+            hugContent.classList.add('show');
+        });
+
+        // Function to adjust content dynamically based on screen size
+        function adjustContent() {
+            const screenWidth = window.innerWidth;
+            const title = document.querySelector('.title');
+            const buttons = document.querySelectorAll('button');
+
+            if (screenWidth < 600) {
+                title.style.fontSize = "6vw";  // Increase title size on small screens
+                buttons.forEach(btn => btn.style.fontSize = "5vw");
+            } else {
+                title.style.fontSize = "4vw";  // Normal size for larger screens
+                buttons.forEach(btn => btn.style.fontSize = "3vw");
+            }
+        }
+
+        // Adjust content on page load and window resize
+        adjustContent();
+        window.onresize = adjustContent;
+    </script>
+</body>
+</html>
